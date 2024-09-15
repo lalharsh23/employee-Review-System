@@ -1,0 +1,66 @@
+/* body styling */
+body{
+    background: linear-gradient(to bottom, white, rgb(186, 254, 250)); 
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: auto;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* form container styling */
+.frm-container {
+    display: grid;
+    place-content: center;
+    width: 530px;
+    border-radius: 5px;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.05);
+    padding: 30px 20px;
+    background: black;
+    color: white;
+}
+
+/* background black */
+.bg-black{
+    background-color: black;
+}
+.font-white{
+    color: white !important;
+}
+.font-gray{
+    color: rgb(168, 168, 168) !important;
+}
+.disp-none{
+    display: none;
+}
+.ratings{
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 5px;
+}
+.rev-frm{
+    display: grid;
+    place-content: center;
+    width: 530px;
+    background: rgb(255, 255, 255);
+    border-radius: 5px;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.05);
+    padding: 30px 20px;
+    background: black;
+    color: white;
+}
+.upd-frm{
+    display: grid;
+    place-content: left;
+    background: rgb(255, 255, 255);
+    border-radius: 5px;
+    box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.05);
+    padding: 30px 20px;
+    background: black;
+    color: white;
+}
+.scroll-div{
+    overflow-y: scroll;
+    height: 500px;
+}

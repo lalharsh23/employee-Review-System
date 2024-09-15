@@ -1,0 +1,57 @@
+<div class="d-flex justify-content-center p-4 p-md-0">
+    <form
+        class="rounded p-3 col-12 col-md-4 my-4 shadow-lg frm-container"
+        method="POST"
+        action="/create-session"
+    >
+        <h3 class="mb-4 text-center">Sign in</h3>
+        <!-- Email input -->
+        <div class="form-outline mb-3">
+            <label class="form-label" for="email">Email address</label>
+            <input type="email" id="email" name="email" class="form-control" />
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-3">
+            <label class="form-label" for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control" />
+        </div>
+
+        <!-- Credential buttons -->
+        <div class="d-flex justify-content-between mb-2 gap-2">
+            <button
+                type="button"
+                class="btn btn-secondary flex-grow-1"
+                onclick="fillAdminCredentials()"
+            >
+                Get Admin Credential
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="fillEmp1Credentials()">
+                Get Employee 1 Credential
+            </button>
+        </div>
+        <div class="d-flex justify-content-between mb-3 gap-2">
+            <button type="button" class="btn btn-secondary" onclick="fillEmp2Credentials()">
+                Get Employee 2 Credential
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="fillEmp3Credentials()">
+                Get Employee 3 Credential
+            </button>
+        </div>
+
+        <!-- Login button -->
+        <div>
+            <button type="submit" class="btn btn-primary btn-block fw-semibold" style="width: 100%">
+                LOGIN
+            </button>
+        </div>
+        <div>
+            <hr />
+        </div>
+
+        <!-- Link to redirect to signup page -->
+        <div class="text-center">
+            <p>Not an user? <a href="/sign-up">Register</a></p>
+        </div>
+    </form>
+</div>

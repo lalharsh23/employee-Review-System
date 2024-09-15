@@ -1,0 +1,246 @@
+<link rel="stylesheet" href="/css/star.css" />
+<% if (locals.user) {%>
+<div class="cnt" style="display: flex">
+    <div class="left-div mx-4" style="width: 60%">
+        <!-- update role -->
+        <div class="container mt-4">
+            <h4 class="text-center">Employee details</h4>
+
+            <form class="row g-3 mt-1 border rounded p-2 shadow frm-container" style="--bs-border-opacity: 0.5; display: flex; width: 100%" action="/update-employee/<%= employee._id %>" method="POST">
+                <div style="width: 60%">
+                    <dl>
+                        <dt class="fw-semibold">
+                            User name:
+                            <span class="fw-normal"> <%= employee.username %> </span>
+                        </dt>
+                        <dt class="fw-semibold">
+                            Email address
+                            <span class="fw-normal"> <%= employee.email %> </span>
+                        </dt>
+                        <dt class="fw-semibold">
+                            Current role
+                            <span class="fw-normal"> <%= employee.role %> </span>
+                        </dt>
+                    </dl>
+                </div>
+                <div style="width: 40%">
+                    <input type="text" id="name" name="username" class="form-control" value="<%= employee.username %>" required readonly style="display: none" />
+                    <input type="email" id="email" name="email" class="form-control" value="<%= employee.email %>" readonly required style="display: none" />
+                    <!-- role input -->
+                    <div class="form-outline mb-2">
+                        <label class="form-label" for="role"><b>Update Role</b></label>
+                        <select class="form-select" id="role" name="role" aria-label="Default select example" required>
+                            <option selected value="employee">Employee</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary" style="width: 50%">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- add own review -->
+        <div class="container mt-4">
+            <h4 class="text-center">Add Review</h4>
+
+            <form
+                action="/review/create/<%= user.id %>"
+                class="row g-3 mt-1 border rounded p-2 shadow rev-frm"
+                style="--bs-border-opacity: 0.5; display: flex; width: 100%; --bs-gutter-y: 0"
+                method="POST"
+            >
+                <input type="email" class="form-control mt-2" id="recipient" value="<%= employee.email %>" readonly name="recipient_email" style="display: none" />
+                <input type="email" class="form-control mt-2" id="recipient-name" value="<%= employee.username %>" readonly name="user-name" style="display: none" />
+
+                <div>
+                    <label for="feedback-form" class="form-label fw-semibold">Feedback:</label>
+                    <textarea class="form-control" id="feedback-form" name="feedback" rows="2" required></textarea>
+                </div>
+                <div class="ratings">
+                    <label for="feedback-form" class="form-label fw-semibold">Job Performance:</label>
+                    <div class="rate">
+                        <input type="radio" id="job_star5" name="jobPerf" value="5" />
+                        <label for="job_star5" title="text">5 stars</label>
+                        <input type="radio" id="job_star4" name="jobPerf" value="4" />
+                        <label for="job_star4" title="text">4 stars</label>
+                        <input type="radio" id="job_star3" name="jobPerf" value="3" />
+                        <label for="job_star3" title="text">3 stars</label>
+                        <input type="radio" id="job_star2" name="jobPerf" value="2" />
+                        <label for="job_star2" title="text">2 stars</label>
+                        <input type="radio" id="job_star1" name="jobPerf" value="1" />
+                        <label for="job_star1" title="text">1 star</label>
+                    </div>
+                </div>
+                <div class="ratings">
+                    <label for="feedback-form" class="form-label fw-semibold">Skills and Competencies:</label>
+                    <div class="rate">
+                        <input type="radio" id="skills_star5" name="skl" value="5" />
+                        <label for="skills_star5" title="text">5 stars</label>
+                        <input type="radio" id="skills_star4" name="skl" value="4" />
+                        <label for="skills_star4" title="text">4 stars</label>
+                        <input type="radio" id="skills_star3" name="skl" value="3" />
+                        <label for="skills_star3" title="text">3 stars</label>
+                        <input type="radio" id="skills_star2" name="skl" value="2" />
+                        <label for="skills_star2" title="text">2 stars</label>
+                        <input type="radio" id="skills_star1" name="skl" value="1" />
+                        <label for="skills_star1" title="text">1 star</label>
+                    </div>
+                </div>
+                <div class="ratings">
+                    <label for="feedback-form" class="form-label fw-semibold">Behavior and Collaboration:</label>
+                    <div class="rate">
+                        <input type="radio" id="bhv_star5" name="bvr" value="5" />
+                        <label for="bhv_star5" title="text">5 stars</label>
+                        <input type="radio" id="bhv_star4" name="bvr" value="4" />
+                        <label for="bhv_star4" title="text">4 stars</label>
+                        <input type="radio" id="bhv_star3" name="bvr" value="3" />
+                        <label for="bhv_star3" title="text">3 stars</label>
+                        <input type="radio" id="bhv_star2" name="bvr" value="2" />
+                        <label for="bhv_star2" title="text">2 stars</label>
+                        <input type="radio" id="bhv_star1" name="bvr" value="1" />
+                        <label for="bhv_star1" title="text">1 star</label>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary align-self-end" style="width: 40%" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Feedbacks -->
+    <div class="right-div mx-4" style="width: 40%">
+        <div class="container mt-4">
+            <h4 class="text-center">Feedbacks</h4>
+            <div class="scroll-div">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <% for (review of reviewsFromOthers) {%>
+                    <div class="rounded p-3 mt-1 mb-3 border upd-frm rev-cnt" style="width: 100%">
+                        <dl>
+                            <dt class="fw-semibold">
+                                Reviewer:
+                                <span class="fw-normal">
+                                    <%= review.reviewer.email %> (<%= review.reviewer.username %>) <% if(review.reviewer.role === 'admin') { %>
+                                    <span><b>(Admin)</b></span>
+                                    <% } %>
+                                </span>
+                            </dt>
+                            <dt class="fw-semibold">
+                                Feedback:
+                                <span class="fw-normal"> <%= review.review %> </span>
+                            </dt>
+                            <dt class="fw-semibold">
+                                Job Performance: <% let i = 1 %> <% for (; i <= review.jobPerformance; i++) { %>
+                                <span><i class="fa-solid fa-star"></i> </span>
+                                <% } %> <% for (; i <= 5; i++) { %>
+                                <span><i class="fa-regular fa-star"></i> </span>
+                                <% } %>
+                            </dt>
+                            <dt class="fw-semibold">
+                                Skills and Competencies: <% i = 1 %> <% for (; i <= review.skills; i++) { %>
+                                <span><i class="fa-solid fa-star"></i> </span>
+                                <% } %> <% for (; i <= 5; i++) { %>
+                                <span><i class="fa-regular fa-star"></i> </span>
+                                <% } %>
+                            </dt>
+                            <dt class="fw-semibold">
+                                Behavior and Collaboration: <% i = 1 %> <% for (; i <= review.behavior; i++) { %>
+                                <span><i class="fa-solid fa-star"></i> </span>
+                                <% } %> <% for (; i <= 5; i++) { %>
+                                <span><i class="fa-regular fa-star"></i> </span>
+                                <% } %>
+                            </dt>
+                            <dt class="fw-semibold edit-btn">
+                                <button class="btn btn-primary mt-2" type="submit" style="width: 40%">Edit</button>
+                            </dt>
+                        </dl>
+                    </div>
+
+                    <div style="width: 100%" class="disp-none rev-upd-cnt">
+                        <form action="/review/update-review/<%= review._id%>" method="POST" class="rounded p-3 mt-1 mb-3 border upd-frm" style="background: rgb(97, 97, 97);">
+                            <div class="form-outline mb-2">
+                                <label for="recipient" class="form-label">From</label>
+                                <input type="text" id="recipient" class="form-control" value="<%= review.reviewer.email %>" readonly />
+                            </div>
+
+                            <div>
+                                <label for="feedback" class="form-label">Feedback</label>
+                                <textarea class="form-control" id="feedback-form" name="feedback" rows="3"><%=review.review %></textarea>
+                            </div>
+
+                            <div class="ratings">
+                                <label for="feedback-form" class="form-label fw-semibold">Job Performance:</label>
+                                <div class="rate">
+                                    <input type="radio" id="job_star5_<%= review._id%>" name="jobPerf_<%= review._id%>" value="5" <% if (review.jobPerformance === 5) { %>checked<% } %> />
+                                    <label for="job_star5_<%= review._id%>" title="text">5 stars</label>
+                                    <input type="radio" id="job_star4_<%= review._id%>" name="jobPerf_<%= review._id%>" value="4" <% if (review.jobPerformance === 4) { %>checked<% } %> />
+                                    <label for="job_star4_<%= review._id%>" title="text">4 stars</label>
+                                    <input type="radio" id="job_star3_<%= review._id%>" name="jobPerf_<%= review._id%>" value="3" <% if (review.jobPerformance === 3) { %>checked<% } %> />
+                                    <label for="job_star3_<%= review._id%>" title="text">3 stars</label>
+                                    <input type="radio" id="job_star2_<%= review._id%>" name="jobPerf_<%= review._id%>" value="2" <% if (review.jobPerformance === 2) { %>checked<% } %> />
+                                    <label for="job_star2_<%= review._id%>" title="text">2 stars</label>
+                                    <input type="radio" id="job_star1_<%= review._id%>" name="jobPerf_<%= review._id%>" value="1" <% if (review.jobPerformance === 1) { %>checked<% } %> />
+                                    <label for="job_star1_<%= review._id%>" title="text">1 star</label>
+                                </div>
+                            </div>
+                            <div class="ratings">
+                                <label for="feedback-form" class="form-label fw-semibold">Skills and Competencies:</label>
+                                <div class="rate">
+                                    <input type="radio" id="skills_star5_<%= review._id%>" name="skl_<%= review._id%>" value="5" <% if (review.skills === 5) { %>checked<% } %> />
+                                    <label for="skills_star5_<%= review._id%>" title="text">5 stars</label>
+                                    <input type="radio" id="skills_star4_<%= review._id%>" name="skl_<%= review._id%>" value="4" <% if (review.skills === 4) { %>checked<% } %> />
+                                    <label for="skills_star4_<%= review._id%>" title="text">4 stars</label>
+                                    <input type="radio" id="skills_star3_<%= review._id%>" name="skl_<%= review._id%>" value="3" <% if (review.skills === 3) { %>checked<% } %> />
+                                    <label for="skills_star3_<%= review._id%>" title="text">3 stars</label>
+                                    <input type="radio" id="skills_star2_<%= review._id%>" name="skl_<%= review._id%>" value="2" <% if (review.skills === 2) { %>checked<% } %> />
+                                    <label for="skills_star2_<%= review._id%>" title="text">2 stars</label>
+                                    <input type="radio" id="skills_star1_<%= review._id%>" name="skl_<%= review._id%>" value="1" <% if (review.skills === 1) { %>checked<% } %> />
+                                    <label for="skills_star1_<%= review._id%>" title="text">1 star</label>
+                                </div>
+                            </div>
+                            <div class="ratings">
+                                <label for="feedback-form" class="form-label fw-semibold">Behavior and Collaboration:</label>
+                                <div class="rate">
+                                    <input type="radio" id="bhv_star5_<%= review._id%>" name="bvr_<%= review._id%>" value="5" <% if (review.behavior === 5) { %>checked<% } %> />
+                                    <label for="bhv_star5_<%= review._id%>" title="text">5 stars</label>
+                                    <input type="radio" id="bhv_star4_<%= review._id%>" name="bvr_<%= review._id%>" value="4" <% if (review.behavior === 4) { %>checked<% } %> />
+                                    <label for="bhv_star4_<%= review._id%>" title="text">4 stars</label>
+                                    <input type="radio" id="bhv_star3_<%= review._id%>" name="bvr_<%= review._id%>" value="3" <% if (review.behavior === 3) { %>checked<% } %> />
+                                    <label for="bhv_star3_<%= review._id%>" title="text">3 stars</label>
+                                    <input type="radio" id="bhv_star2_<%= review._id%>" name="bvr_<%= review._id%>" value="2" <% if (review.behavior === 2) { %>checked<% } %> />
+                                    <label for="bhv_star2_<%= review._id%>" title="text">2 stars</label>
+                                    <input type="radio" id="bhv_star1_<%= review._id%>" name="bvr_<%= review._id%>" value="1" <% if (review.behavior === 1) { %>checked<% } %> />
+                                    <label for="bhv_star1_<%= review._id%>" title="text">1 star</label>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-danger mt-2 cancel-btn" type="reset" style="width: 40%">Cancel</button>
+                                <button class="btn btn-primary mt-2 update-btn" type="submit" style="width: 40%">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                    <%} %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%} %>
+
+<script>
+    $(".edit-btn").click(function () {
+        let container = $(this).closest(".rev-cnt");
+        let content = container.next(".disp-none");
+        content.slideToggle();
+        container.slideToggle();
+    });
+    $(".cancel-btn").click(function () {
+        let container = $(this).closest(".rev-upd-cnt");
+        var index = $(".cancel-btn").index(this);
+        var content = $(".rev-cnt").eq(index);
+        content.slideToggle();
+        container.slideToggle();
+    });
+</script>
